@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const URL = "http://localhost:8080/api/v1/task";
+const URL = "http://localhost:8080/api/v1/task/create";
 
 const Form = () => {
   const [title, setTitle] = useState("");
@@ -14,7 +14,9 @@ const Form = () => {
       console.log(res);
       setTitle("");
       setDescription("");
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error in Creating task ", error);
+    }
   };
   return (
     <form className="flex w-1/3 max-w-xl flex-col items-center space-y-4 p-5">

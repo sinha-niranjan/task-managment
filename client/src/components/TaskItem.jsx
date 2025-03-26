@@ -1,23 +1,54 @@
+import axios from "axios";
 import React, { useState } from "react";
 
-const TaskItem = () => {
+const TaskItem = ({ task }) => {
   const [isTodoEditable, setIsTodoEditable] = useState(false);
-  const [title, setTitle] = useState("title");
-  const [description, setDescription] = useState("Description   ");
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
+  const [completed, setCompleted] = useState(task.completed);
 
-  const updateTask = () => {
-    console.log(title, description);
-    setTitle("");
-    setDescription("");
-    setIsTodoEditable(false);
+  const updateTask = async () => {
+    try {
+      const URL = `http://localhost:8080/api/v1/task/${task._id}`;
+      const newTask = {
+        title,
+        description,
+        completed,
+      };
+      const res = await axios.put(URL, newTask);
+      if (res?.data) {
+        task = res?.data?.task;
+      }
+      setIsTodoEditable(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const deleteTask = () => {
-    console.log("task is deleted");
+  const deleteTask = async () => {
+    try {
+      const URL = `http://localhost:8080/api/v1/task/${task._id}`;
+
+      const res = await axios.delete(URL);
+      console.log(res);
+      setIsTodoEditable(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="flex w-full max-w-7xl items-center justify-between space-x-2 bg-slate-900 p-2">
+      <div className="flex h-10 w-10 items-center justify-center">
+        <input
+          type="checkbox"
+          className={`cursor-pointer ${
+            completed ? "bg-[#c6e9a7]" : "bg-[#ccbed7]"
+          }`}
+          checked={completed}
+          onChange={() => setCompleted((prev) => !prev)}
+        />
+      </div>
       <div className="flex w-1/3 flex-col items-start justify-center gap-2">
         <label htmlFor="title" className="text-lg text-white">
           Title
