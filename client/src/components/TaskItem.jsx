@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const TaskItem = ({ task }) => {
+const TaskItem = ({ task, setTasks }) => {
   const [isTodoEditable, setIsTodoEditable] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
@@ -31,6 +31,7 @@ const TaskItem = ({ task }) => {
 
       const res = await axios.delete(URL);
       console.log(res);
+      setTasks((prev) => prev.filter((item) => item._id !== task._id));
       setIsTodoEditable(false);
     } catch (error) {
       console.log(error);

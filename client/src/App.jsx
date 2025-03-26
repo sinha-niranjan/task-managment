@@ -29,9 +29,11 @@ function App() {
     <div className="flex min-h-screen w-full items-start justify-center bg-slate-800 pt-5 text-3xl text-white">
       <div className="flex w-full flex-col items-center">
         Task Manager
-        <Form />
+        <Form setTasks={setTasks} />
         {tasks.length != 0 &&
-          tasks?.map((task, index) => <TaskItem task={task} key={index} />)}
+          tasks?.map((task, index) => (
+            <TaskItem setTasks={setTasks} task={task} key={index} />
+          ))}
       </div>
     </div>
   );

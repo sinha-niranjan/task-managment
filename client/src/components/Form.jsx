@@ -3,7 +3,7 @@ import axios from "axios";
 
 const URL = "http://localhost:8080/api/v1/task/create";
 
-const Form = () => {
+const Form = ({   setTasks }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const completed = false;
@@ -11,7 +11,9 @@ const Form = () => {
     try {
       e.preventDefault();
       const res = await axios.post(URL, { title, description, completed });
-      console.log(res);
+      if (res?.data) {
+        setTasks((prev) => [...prev, res?.data?.task]);
+      }
       setTitle("");
       setDescription("");
     } catch (error) {
