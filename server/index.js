@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const taskRoute = require("./routes/task.route.js");
+const connectDB = require("./dbconnection.js");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 const PORT = 8080;
@@ -23,6 +26,7 @@ app.get("/health", (_, res) => {
   });
 });
 
+connectDB();
 app.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);
 });

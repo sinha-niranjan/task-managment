@@ -1,13 +1,20 @@
 import React, { useState } from "react";
+import axios from "axios";
+
+const URL = "http://localhost:8080/api/v1/task";
 
 const Form = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const completed = false;
   const taskHandler = async (e) => {
-    e.preventDefault();
-    console.log(title, description);
-    setTitle("");
-    setDescription("");
+    try {
+      e.preventDefault();
+      const res = await axios.post(URL, { title, description, completed });
+      console.log(res);
+      setTitle("");
+      setDescription("");
+    } catch (error) {}
   };
   return (
     <form className="flex w-1/3 max-w-xl flex-col items-center space-y-4 p-5">

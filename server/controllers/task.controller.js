@@ -3,7 +3,7 @@ const Task = require("../models/task.model");
 const createTask = async (req, res) => {
   try {
     const { title, description, completed } = req.body;
-    const task = Task.create({ title, description, completed });
+    const task = await Task.create({ title, description, completed });
 
     return res.status(201).json({
       message: "task is created successfully",
